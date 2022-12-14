@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id       String  @id @default(uuid())
+  email    String  @unique
+  name     String
+  password String
+  isAdmin  Int     @default(0)
+  Alert    Alert[]
+
+  @@map("users")
+}
+
+model Alert {
+  id        String   @id @default(uuid())
+  user      Users?   @relation(fields: [user_id], references: [id])
+  user_id   String
+  createdAt DateTime @default(now())
+
+  @@map("alert")
+}
+
+model Company {
+  id     String   @id @default(uuid())
+  name   String   @unique
+  city   String
+  Points Points[]
+  Post   Post[]
+
+  @@map("company")
+}
+
+model Points {
+  id        String @id @default(uuid())
+  name      String @unique
+  latitude  Float
+  longitude Float
+
+  company    Company? @relation(fields: [company_id], references: [id])
+  company_id String
+
+  @@map("points")
+}
+
+model Itens {
+  id         String      @id @default(uuid())
+  name       String
+  created_at DateTime    @default(now())
+  PostItens  PostItens[]
+}
+
+model Post {
+  id   String @id @default(uuid())
+  name String @unique
+
+  company    Company?    @relation(fields: [company_id], references: [id])
+  company_id String
+  PostItens  PostItens[]
+}
+
+model PostItens {
+  post    Post   @relation(fields: [post_id], references: [id])
+  post_id String
+
+  itens    Itens  @relation(fields: [itens_id], references: [id])
+  itens_id String
+
+  @@id([post_id, itens_id])
+}
