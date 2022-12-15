@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { UserCreateDto } from './DTO/userCreate.dto';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';;
 
 interface IProps{
   id: string;
@@ -11,7 +11,9 @@ interface IProps{
 
 @Injectable()
 export class UsersService{
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    ) {}
 
   public async updateUserPassword({id, password, newPassord}: IProps){
     const findUser = await this.prisma.users.findUnique({
@@ -100,6 +102,5 @@ export class UsersService{
 
     return userCreated;
   }
-
   
 }

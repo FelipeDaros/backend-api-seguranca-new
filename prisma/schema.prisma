@@ -11,12 +11,14 @@ datasource db {
 }
 
 model Users {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  name     String
-  password String
-  isAdmin  Int     @default(0)
-  Alert    Alert[]
+  id              String            @id @default(uuid())
+  email           String            @unique
+  name            String
+  password        String
+  isAdmin         Int               @default(0)
+  Alert           Alert[]
+  ServiceDay      ServiceDay[]
+  ServiceDayItens ServiceDayItens[]
 
   @@map("users")
 }
@@ -53,19 +55,25 @@ model Points {
 }
 
 model Itens {
-  id         String      @id @default(uuid())
-  name       String
-  created_at DateTime    @default(now())
-  PostItens  PostItens[]
+  id              String            @id @default(uuid())
+  name            String
+  created_at      DateTime          @default(now())
+  PostItens       PostItens[]
+  ServiceDayItens ServiceDayItens[]
+
+  @@map("itens")
 }
 
 model Post {
   id   String @id @default(uuid())
   name String @unique
 
-  company    Company?    @relation(fields: [company_id], references: [id])
-  company_id String
-  PostItens  PostItens[]
+  company         Company?          @relation(fields: [company_id], references: [id])
+  company_id      String
+  PostItens       PostItens[]
+  ServiceDayItens ServiceDayItens[]
+
+  @@map("post")
 }
 
 model PostItens {
@@ -76,4 +84,29 @@ model PostItens {
   itens_id String
 
   @@id([post_id, itens_id])
+  @@map("post_itens")
+}
+
+model ServiceDay {
+  id             String   @id @default(uuid())
+  created_at     DateTime @default(now())
+  report_reading Boolean  @default(false)
+  user           Users    @relation(fields: [user_id], references: [id])
+  user_id        String
+
+  @@map("serviceday")
+}
+
+model ServiceDayItens {
+  post    Post   @relation(fields: [post_id], references: [id])
+  post_id String
+
+  itens    Itens  @relation(fields: [itens_id], references: [id])
+  itens_id String
+
+  user    Users  @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@id([post_id, itens_id, user_id])
+  @@map("service-day-itens")
 }

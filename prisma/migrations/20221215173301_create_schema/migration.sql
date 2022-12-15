@@ -33,28 +33,49 @@ CREATE TABLE "points" (
 );
 
 -- CreateTable
-CREATE TABLE "Itens" (
+CREATE TABLE "itens" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- CreateTable
-CREATE TABLE "Post" (
+CREATE TABLE "post" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "company_id" TEXT NOT NULL,
-    CONSTRAINT "Post_company_id_fkey" FOREIGN KEY ("company_id") REFERENCES "company" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "post_company_id_fkey" FOREIGN KEY ("company_id") REFERENCES "company" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
-CREATE TABLE "PostItens" (
+CREATE TABLE "post_itens" (
     "post_id" TEXT NOT NULL,
     "itens_id" TEXT NOT NULL,
 
     PRIMARY KEY ("post_id", "itens_id"),
-    CONSTRAINT "PostItens_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "Post" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "PostItens_itens_id_fkey" FOREIGN KEY ("itens_id") REFERENCES "Itens" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "post_itens_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "post_itens_itens_id_fkey" FOREIGN KEY ("itens_id") REFERENCES "itens" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "serviceday" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "report_reading" BOOLEAN NOT NULL DEFAULT false,
+    "user_id" TEXT NOT NULL,
+    CONSTRAINT "serviceday_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "service-day-itens" (
+    "post_id" TEXT NOT NULL,
+    "itens_id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+
+    PRIMARY KEY ("post_id", "itens_id", "user_id"),
+    CONSTRAINT "service-day-itens_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "service-day-itens_itens_id_fkey" FOREIGN KEY ("itens_id") REFERENCES "itens" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "service-day-itens_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateIndex
@@ -67,4 +88,4 @@ CREATE UNIQUE INDEX "company_name_key" ON "company"("name");
 CREATE UNIQUE INDEX "points_name_key" ON "points"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Post_name_key" ON "Post"("name");
+CREATE UNIQUE INDEX "post_name_key" ON "post"("name");
