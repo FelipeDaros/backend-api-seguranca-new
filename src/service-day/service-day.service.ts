@@ -9,13 +9,6 @@ export class ServiceDayService {
   ){}
 
   public async create(createServiceDay: CreateServiceDayDTO){
-    const serviceDay = await this.prismaService.serviceDay.create({
-      data: createServiceDay
-    });
-
-    
-    
-
-    return serviceDay;
+    const create = this.prismaService
   }
 }

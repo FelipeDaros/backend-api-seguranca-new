@@ -9,11 +9,12 @@ import { CompanyModule } from './company/company.module';
 import { PostModule } from './post/post.module';
 import { PostItensModule } from './post-itens/post-itens.module';
 import { ServiceDayModule } from './service-day/service-day.module';
+import { OccurrenceModule } from './occurrence/occurrence.module';
 
 
 @Module({
   controllers: [AppController],
   providers: [AppService, PrismaService],
-  imports: [UsersModule, ItensModule, CompanyModule, PostModule, PostItensModule, ServiceDayModule],
+  imports: [UsersModule, ItensModule, CompanyModule, PostModule, PostItensModule, ServiceDayModule, OccurrenceModule],
 })
 export class AppModule {}

@@ -19,6 +19,7 @@ model Users {
   Alert           Alert[]
   ServiceDay      ServiceDay[]
   ServiceDayItens ServiceDayItens[]
+  Occurrence      Occurrence[]
 
   @@map("users")
 }
@@ -109,4 +110,15 @@ model ServiceDayItens {
 
   @@id([post_id, itens_id, user_id])
   @@map("service-day-itens")
+}
+
+model Occurrence {
+  id         String   @id @default(uuid())
+  user       Users    @relation(fields: [user_id], references: [id])
+  user_id    String
+  resume     String
+  locale     String
+  created_at DateTime @default(now())
+
+  @@map("occurrence")
 }
