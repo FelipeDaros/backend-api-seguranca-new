@@ -1,4 +1,5 @@
-import { IsBoolean, IsString } from "class-validator";
+import { Itens, Post } from "@prisma/client";
+import { IsArray, IsBoolean, IsString } from "class-validator";
 
 
 export class CreateServiceDayDTO{
@@ -7,4 +8,10 @@ export class CreateServiceDayDTO{
 
   @IsBoolean()
   report_reading: boolean;
+
+  @IsArray()
+  itens_id: string[];
+
+  @IsString()
+  post_id: string;
 }

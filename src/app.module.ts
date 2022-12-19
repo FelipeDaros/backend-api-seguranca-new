@@ -7,14 +7,15 @@ import { UsersModule } from './users/users.module';
 import { ItensModule } from './itens/itens.module';
 import { CompanyModule } from './company/company.module';
 import { PostModule } from './post/post.module';
-import { PostItensModule } from './post-itens/post-itens.module';
 import { ServiceDayModule } from './service-day/service-day.module';
 import { OccurrenceModule } from './occurrence/occurrence.module';
+import { RoundModule } from './round/round.module';
+import { PointModule } from './point/point.module';
 
 
 @Module({
   controllers: [AppController],
   providers: [AppService, PrismaService],
-  imports: [UsersModule, ItensModule, CompanyModule, PostModule, PostItensModule, ServiceDayModule, OccurrenceModule],
+  imports: [UsersModule, ItensModule, CompanyModule, PostModule, ServiceDayModule, OccurrenceModule, RoundModule, PointModule],
 })
 export class AppModule {}

@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Post } from '@prisma/client';
-import { ItensService } from 'src/itens/itens.service';
 import { PrismaService } from 'src/prisma.service';
 import { CreatePostDTO } from './DTO/CreatePost.dto';
 
@@ -10,7 +9,7 @@ export class PostService {
     private prismaService: PrismaService
   ){}
 
-  public async create({name, company_id}:CreatePostDTO): Promise<Post>{
+  public async create({name, company_id, itens_id}:CreatePostDTO): Promise<Post>{
     const postExits = await this.prismaService.post.findUnique({
       where: {
         name
@@ -29,6 +28,15 @@ export class PostService {
         name,
         company_id
       }
+    });
+
+    Array.from({length: itens_id.length}).map(async(data, index) => {
+      await this.prismaService.postItens.create({
+        data: {
+          itens_id: itens_id[index],
+          post_id: post.id
+        }
+      })
     });
     
     return post;

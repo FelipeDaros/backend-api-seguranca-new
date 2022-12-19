@@ -2,10 +2,6 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/commo
 import { CreatePostDTO } from './DTO/CreatePost.dto';
 import { PostService } from './post.service';
 
-interface ICreateItens{
-  nameIten: string;
-}
-
 @Controller('post')
 export class PostController {
   constructor(private postService: PostService){}

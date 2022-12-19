@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["createMany"]
 }
 
 datasource db {
@@ -20,6 +21,7 @@ model Users {
   ServiceDay      ServiceDay[]
   ServiceDayItens ServiceDayItens[]
   Occurrence      Occurrence[]
+  Round           Round[]
 
   @@map("users")
 }
@@ -51,6 +53,7 @@ model Points {
 
   company    Company? @relation(fields: [company_id], references: [id])
   company_id String
+  Round      Round[]
 
   @@map("points")
 }
@@ -73,6 +76,7 @@ model Post {
   company_id      String
   PostItens       PostItens[]
   ServiceDayItens ServiceDayItens[]
+  Round           Round[]
 
   @@map("post")
 }
@@ -121,4 +125,21 @@ model Occurrence {
   created_at DateTime @default(now())
 
   @@map("occurrence")
+}
+
+model Round {
+  id String @id @default(uuid())
+
+  user    Users  @relation(fields: [user_id], references: [id])
+  user_id String
+
+  point    Points @relation(fields: [point_id], references: [id])
+  point_id String
+
+  post    Post   @relation(fields: [post_id], references: [id])
+  post_id String
+
+  created_at DateTime @default(now())
+
+  @@map("round")
 }

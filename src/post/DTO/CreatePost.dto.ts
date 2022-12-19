@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsArray, IsString } from "class-validator";
 
 
 export class CreatePostDTO{
@@ -8,4 +8,7 @@ export class CreatePostDTO{
 
   @IsString()
   company_id: string;
+
+  @IsArray()
+  itens_id: string[];
 }
