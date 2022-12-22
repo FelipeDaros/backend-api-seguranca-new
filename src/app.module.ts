@@ -11,11 +11,13 @@ import { ServiceDayModule } from './service-day/service-day.module';
 import { OccurrenceModule } from './occurrence/occurrence.module';
 import { RoundModule } from './round/round.module';
 import { PointModule } from './point/point.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
   controllers: [AppController],
   providers: [AppService, PrismaService],
-  imports: [UsersModule, ItensModule, CompanyModule, PostModule, ServiceDayModule, OccurrenceModule, RoundModule, PointModule],
+  imports: [ConfigModule.forRoot(), UsersModule, ItensModule, CompanyModule, PostModule, ServiceDayModule, OccurrenceModule, RoundModule, PointModule, AuthModule],
 })
 export class AppModule {}

@@ -4,7 +4,9 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "isAdmin" INTEGER NOT NULL DEFAULT 0
+    "isAdmin" INTEGER NOT NULL DEFAULT 0,
+    "post_id" TEXT DEFAULT '',
+    CONSTRAINT "users_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -86,6 +88,19 @@ CREATE TABLE "occurrence" (
     "locale" TEXT NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "occurrence_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "round" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "user_id" TEXT NOT NULL,
+    "point_id" TEXT NOT NULL,
+    "post_id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "round_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "round_point_id_fkey" FOREIGN KEY ("point_id") REFERENCES "points" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "round_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateIndex

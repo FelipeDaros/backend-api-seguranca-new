@@ -22,6 +22,8 @@ model Users {
   ServiceDayItens ServiceDayItens[]
   Occurrence      Occurrence[]
   Round           Round[]
+  post            Post?             @relation(fields: [post_id], references: [id])
+  post_id         String?           @default("")
 
   @@map("users")
 }
@@ -77,6 +79,7 @@ model Post {
   PostItens       PostItens[]
   ServiceDayItens ServiceDayItens[]
   Round           Round[]
+  Users           Users[]
 
   @@map("post")
 }
@@ -138,6 +141,8 @@ model Round {
 
   post    Post   @relation(fields: [post_id], references: [id])
   post_id String
+
+  name String
 
   created_at DateTime @default(now())
 

@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateRoundDto } from './dto/CreateRound.dto';
 import { RoundService } from './round.service';
 
 @Controller('round')
+@UseGuards(AuthGuard("jwt"))
 export class RoundController {
   constructor(
     private readonly roundService: RoundService

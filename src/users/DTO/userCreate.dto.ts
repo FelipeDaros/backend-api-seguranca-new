@@ -11,4 +11,7 @@ export class UserCreateDto{
 
   @IsString()
   password: string;
+
+  @IsString()
+  post_id: string;
 }

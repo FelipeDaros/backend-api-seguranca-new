@@ -65,7 +65,9 @@ export class UsersService{
       where: {
         id
       },
-      data: name
+      data: {
+        name
+      }
     });
 
     return user;
@@ -75,7 +77,7 @@ export class UsersService{
     return await this.prisma.users.findMany();
   }
 
-  public async createUser({email, name, password}: UserCreateDto){
+  public async createUser({email, name, password, post_id}: UserCreateDto){
     const findUserEmail = await this.prisma.users.findFirst({
       where: {
         email
@@ -96,7 +98,8 @@ export class UsersService{
         email,
         name,
         password: passwordHash,
-        isAdmin: 0
+        isAdmin: 0,
+        post_id
       }
     });
 

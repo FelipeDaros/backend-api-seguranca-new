@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
 import { CreatePostDTO } from './DTO/CreatePost.dto';
 import { PostService } from './post.service';
 
@@ -18,10 +18,8 @@ export class PostController {
     return this.postService.create(createPostDTO);
   }
 
-  @Get('/find-itens-post')
-  @HttpCode(HttpStatus.FOUND)
-  public findItensPost(@Body() body: any){
-    const {id} = body;
+  @Get('/find-itens-post/:id')
+  public findItensPost(@Param("id") id: string){
     return this.postService.findItensPost(id);
   }
 }

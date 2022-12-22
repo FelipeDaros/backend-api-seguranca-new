@@ -30,14 +30,16 @@ export class PostService {
       }
     });
 
-    Array.from({length: itens_id.length}).map(async(data, index) => {
+    itens_id.map(async(e, index) => {
+      console.log(itens_id[index])
       await this.prismaService.postItens.create({
         data: {
           itens_id: itens_id[index],
           post_id: post.id
         }
       })
-    });
+    })
+
     
     return post;
   }
@@ -52,9 +54,6 @@ export class PostService {
         id
       },
       select: {
-        id: true,
-        name: true,
-        company: true,
         PostItens: {
           select: {
             itens: true

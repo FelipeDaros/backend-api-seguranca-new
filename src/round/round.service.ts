@@ -9,16 +9,10 @@ export class RoundService {
     private readonly prismaService: PrismaService
   ){}
 
-  public async create({user_id, point_id, post_id, latitude, longitude}: CreateRoundDto){
-    const pointName = await this.prismaService.points.findFirst({
-      where: {
-        id: point_id
-      }
-    });
-
+    public async create({user_id, post_id, latitude, longitude, name}: CreateRoundDto){
     const pointExits = await this.prismaService.points.findUnique({
       where: {
-        name: pointName.name
+        name
       }
     });
 
@@ -35,12 +29,13 @@ export class RoundService {
     const longitudeMais = Number(pointExits.longitude)*1.0001;
     const longitudeMenos = Number(pointExits.longitude)*0.9999;
 
-    if((longitude <= longitudeMais && longitude >= longitudeMenos) && (latitude <= latitudeMais && latitude >= latitudeMenos)){
+    if((longitude <= longitudeMais && longitude >= longitudeMenos) && (latitude <= latitudeMais && latitude >= latitudeMenos) && (pointExits.name === name)){
       return await this.prismaService.round.create({
         data: {
-          point_id,
+          point_id: pointExits.id,
           user_id,
-          post_id
+          post_id,
+          name
         }
       });
     }else{
