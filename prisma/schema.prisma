@@ -24,6 +24,7 @@ model Users {
   Round           Round[]
   post            Post?             @relation(fields: [post_id], references: [id])
   post_id         String?           @default("")
+  TimeAlert       TimeAlert[]
 
   @@map("users")
 }
@@ -147,4 +148,14 @@ model Round {
   created_at DateTime @default(now())
 
   @@map("round")
+}
+
+model TimeAlert {
+  id         String   @id @default(uuid())
+  user       Users    @relation(fields: [user_id], references: [id])
+  user_id    String
+  created_at DateTime @default(now())
+  late       Boolean
+
+  @@map("time-alert")
 }

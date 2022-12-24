@@ -13,11 +13,12 @@ import { RoundModule } from './round/round.module';
 import { PointModule } from './point/point.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { TimeAlertModule } from './time-alert/time-alert.module';
 
 
 @Module({
   controllers: [AppController],
   providers: [AppService, PrismaService],
-  imports: [ConfigModule.forRoot(), UsersModule, ItensModule, CompanyModule, PostModule, ServiceDayModule, OccurrenceModule, RoundModule, PointModule, AuthModule],
+  imports: [ConfigModule.forRoot(), UsersModule, ItensModule, CompanyModule, PostModule, ServiceDayModule, OccurrenceModule, RoundModule, PointModule, AuthModule, TimeAlertModule],
 })
 export class AppModule {}

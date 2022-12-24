@@ -17,17 +17,9 @@ export class ServiceDayService {
       }
     });
 
-    Array.from({length: createServiceDay.itens_id.length}).map(async(data, index) => {
-      await this.prismaService.serviceDayItens.create({
-        data: {
-          itens_id: createServiceDay.itens_id[index],
-          post_id: createServiceDay.post_id,
-          user_id: createServiceDay.user_id
-        }
-      });
+    createServiceDay.itens_id.map(async(i) => {
+      await this.prismaService.$queryRaw`INSERT INTO 'service-day-itens' (post_id, itens_id, user_id) VALUES (${createServiceDay.post_id}, ${i}, ${createServiceDay.user_id})`;
     });
-
-    
 
     return create;
   }
