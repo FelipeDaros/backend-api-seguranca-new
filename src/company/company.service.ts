@@ -34,4 +34,17 @@ export class CompanyService {
   public async findAll(): Promise<Company[]>{
     return this.prismaService.company.findMany();
   }
+
+  public async stationCompany(post_id: string){
+    const stationCompany = await this.prismaService.post.findFirst({
+      where: {
+        id: post_id
+      },
+      include: {
+        company: true
+      }
+    })
+
+    return stationCompany;
+  } 
 }
