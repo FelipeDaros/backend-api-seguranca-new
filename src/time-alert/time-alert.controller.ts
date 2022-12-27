@@ -14,6 +14,11 @@ export class TimeAlertController {
 
   @Get()
   public findAll(){
-    this.timeAlertService.findAll();
+    return this.timeAlertService.findAll();
+  }
+
+  @Get("/latest/:id")
+  public findLatestById(@Param("id") user_id: string){
+    return this.timeAlertService.findLatestById(user_id);
   }
 }

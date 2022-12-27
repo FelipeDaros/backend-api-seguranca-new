@@ -1,5 +1,6 @@
 import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MessagesHelper } from 'src/helpers/messages.helper';
+
 import { PrismaService } from 'src/prisma.service';
 import { CreateTimeAlertDto } from './dto/CreateTimeAlert.dto';
 
@@ -37,5 +38,16 @@ export class TimeAlertService {
     const findAllAlertsSevice = await this.prismaService.timeAlert.findMany();
 
     return findAllAlertsSevice;
+  }
+
+  public async findLatestById(user_id: string): Promise<TimeAlert[]>{
+    const findLatest = await this.prismaService.timeAlert.findMany({
+      where: {
+        late: true,
+        user_id: user_id
+      }
+    });
+
+    return findLatest;
   }
 }
