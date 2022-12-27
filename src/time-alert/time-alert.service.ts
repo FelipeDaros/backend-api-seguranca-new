@@ -38,4 +38,15 @@ export class TimeAlertService {
 
     return findAllAlertsSevice;
   }
+
+  public async findLatestById(user_id: string): Promise<TimeAlert[]>{
+    const findLatest = await this.prismaService.timeAlert.findMany({
+      where: {
+        late: true,
+        user_id: user_id
+      }
+    });
+
+    return findLatest;
+  }
 }
