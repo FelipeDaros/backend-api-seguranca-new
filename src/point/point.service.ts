@@ -22,10 +22,10 @@ export class PointService {
 
     const point =  await this.prismaService.points.create({
       data: {
-        name,
+        name: String(name).toUpperCase(),
         company_id,
-        latitude,
-        longitude
+        latitude: Number(latitude),
+        longitude: Number(longitude)
       }
     });
 

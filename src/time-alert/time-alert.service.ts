@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { TimeAlert } from '@prisma/client';
+import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { MessagesHelper } from 'src/helpers/messages.helper';
 import { PrismaService } from 'src/prisma.service';
 import { CreateTimeAlertDto } from './dto/CreateTimeAlert.dto';
 
@@ -16,6 +16,21 @@ export class TimeAlertService {
     });
 
     return alertService;
+  }
+
+  public async findLatestTimeAlertUser(user_id: string){
+    const latestTimeUser = await this.prismaService.timeAlert.findFirst({
+      where: {
+        user_id
+      }
+    });
+
+    if(!latestTimeUser){
+      throw new HttpException({
+        status: HttpStatus.NOT_FOUND,
+        error: MessagesHelper.TIME_ALERT_NOT_FOUND
+      }, HttpStatus.NOT_FOUND);
+    }
   }
 
   public async findAll(){

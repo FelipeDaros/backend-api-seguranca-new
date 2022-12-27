@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+
 import { CreateTimeAlertDto } from './dto/CreateTimeAlert.dto';
 import { TimeAlertService } from './time-alert.service';
 
@@ -8,7 +9,7 @@ export class TimeAlertController {
 
 
   @Post()
-  public create(createTimeAlertDto: CreateTimeAlertDto){
+  public create(@Body() createTimeAlertDto: CreateTimeAlertDto){
     return this.timeAlertService.create(createTimeAlertDto);
   }
 
