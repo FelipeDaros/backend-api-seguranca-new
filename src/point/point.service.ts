@@ -1,4 +1,5 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Points } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreatePointDto } from './dto/CratePoint.dto';
 
@@ -30,5 +31,17 @@ export class PointService {
     });
 
     return point;
+  }
+
+  public async findAllPointsCompany(company_id: string): Promise<Points[]>{
+    const points = await this.prismaService.points.findMany({
+      where: {
+        company_id
+      },
+    });
+
+    if(!points) throw new NotFoundException("Não foi localizado nenhum point nessa empresa!");
+
+    return points;
   }
 }

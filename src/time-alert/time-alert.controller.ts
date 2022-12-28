@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 import { CreateTimeAlertDto } from './dto/CreateTimeAlert.dto';
 import { TimeAlertService } from './time-alert.service';
@@ -21,5 +21,10 @@ export class TimeAlertController {
   @Get("/latest/:id")
   public findLatestById(@Param("id") user_id: string){
     return this.timeAlertService.findLatestById(user_id);
+  }
+
+  @Get("/user/:id")
+  public findLatestTimeAlertUser(@Param("id") user_id: string){
+    return this.timeAlertService.findLatestTimeAlertUser(user_id);
   }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreatePointDto } from './dto/CratePoint.dto';
 import { PointService } from './point.service';
 
@@ -9,5 +9,10 @@ export class PointController {
   @Post()
   public create(@Body() createPointDto:CreatePointDto){
     return this.pointService.create(createPointDto);
+  }
+
+  @Get(":id")
+  public findAllPointsPost(@Param("id") company_id: string){
+    return this.pointService.findAllPointsCompany(company_id);
   }
 }
