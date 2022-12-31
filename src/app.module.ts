@@ -15,11 +15,12 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { TimeAlertModule } from './time-alert/time-alert.module';
 import { PanicModule } from './panic/panic.module';
+import { ReportsModule } from './reports/reports.module';
 
 
 @Module({
   controllers: [AppController],
   providers: [AppService, PrismaService],
-  imports: [ConfigModule.forRoot(), UsersModule, ItensModule, CompanyModule, PostModule, ServiceDayModule, OccurrenceModule, RoundModule, PointModule, AuthModule, TimeAlertModule, PanicModule],
+  imports: [ConfigModule.forRoot(), UsersModule, ItensModule, CompanyModule, PostModule, ServiceDayModule, OccurrenceModule, RoundModule, PointModule, AuthModule, TimeAlertModule, PanicModule, ReportsModule],
 })
 export class AppModule {}
