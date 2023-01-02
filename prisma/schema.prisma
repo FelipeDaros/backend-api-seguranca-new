@@ -170,3 +170,11 @@ model Panic {
 
   @@map("panic")
 }
+
+model Permissions {
+  id         Int      @id @unique @default(autoincrement())
+  name       String   @unique
+  created_at DateTime @default(now())
+
+  @@map("permissions")
+}

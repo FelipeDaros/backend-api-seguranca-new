@@ -1,8 +1,6 @@
-import { Itens, Post } from "@prisma/client";
-import { IsArray, IsBoolean, IsString } from "class-validator";
+import { IsArray, IsBoolean, IsString } from 'class-validator';
 
-
-export class CreateServiceDayDTO{
+export class CreateServiceDayDTO {
   @IsString()
   user_id: string;
 

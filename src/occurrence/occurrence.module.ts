@@ -5,6 +5,6 @@ import { OccurrenceService } from './occurrence.service';
 
 @Module({
   controllers: [OccurrenceController],
-  providers: [OccurrenceService, PrismaService]
+  providers: [OccurrenceService, PrismaService],
 })
 export class OccurrenceModule {}

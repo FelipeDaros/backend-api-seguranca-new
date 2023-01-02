@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma.service';
@@ -16,11 +15,26 @@ import { ConfigModule } from '@nestjs/config';
 import { TimeAlertModule } from './time-alert/time-alert.module';
 import { PanicModule } from './panic/panic.module';
 import { ReportsModule } from './reports/reports.module';
-
+import { PermissionsModule } from './permissions/permissions.module';
 
 @Module({
   controllers: [AppController],
   providers: [AppService, PrismaService],
-  imports: [ConfigModule.forRoot(), UsersModule, ItensModule, CompanyModule, PostModule, ServiceDayModule, OccurrenceModule, RoundModule, PointModule, AuthModule, TimeAlertModule, PanicModule, ReportsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    UsersModule,
+    ItensModule,
+    CompanyModule,
+    PostModule,
+    ServiceDayModule,
+    OccurrenceModule,
+    RoundModule,
+    PointModule,
+    AuthModule,
+    TimeAlertModule,
+    PanicModule,
+    ReportsModule,
+    PermissionsModule,
+  ],
 })
 export class AppModule {}

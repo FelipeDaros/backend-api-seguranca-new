@@ -5,31 +5,30 @@ import { CreatePanicDto } from './dto/CreatePanic.dto';
 
 @Injectable()
 export class PanicService {
-  constructor(private readonly prismaService: PrismaService){}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  public async create(createPanicDto: CreatePanicDto): Promise<Panic>{
+  public async create(createPanicDto: CreatePanicDto): Promise<Panic> {
     const panic = await this.prismaService.panic.create({
-      data: createPanicDto
+      data: createPanicDto,
     });
-    
+
     return panic;
   }
 
-  public async findAll(): Promise<Panic[]>{
+  public async findAll(): Promise<Panic[]> {
     return this.prismaService.panic.findMany();
   }
 
-  public async update(id: string, payload: boolean): Promise<Panic>{
+  public async update(id: string, payload: boolean): Promise<Panic> {
     const updated = await this.prismaService.panic.update({
       data: {
-        verify: payload
+        verify: payload,
       },
       where: {
-        id
-      }
+        id,
+      },
     });
 
     return updated;
   }
-
 }
