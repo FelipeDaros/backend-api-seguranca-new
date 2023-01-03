@@ -5,6 +5,6 @@ import { ServiceDayService } from './service-day.service';
 
 @Module({
   controllers: [ServiceDayController],
-  providers: [ServiceDayService, PrismaService]
+  providers: [ServiceDayService, PrismaService],
 })
 export class ServiceDayModule {}

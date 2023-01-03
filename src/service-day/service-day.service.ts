@@ -5,33 +5,37 @@ import { CreateServiceDayDTO } from './DTO/CreateServiceDay.dto';
 
 @Injectable()
 export class ServiceDayService {
-  constructor(
-    private prismaService: PrismaService
-  ){}
+  constructor(private prismaService: PrismaService) {}
 
-  public async create(createServiceDay: CreateServiceDayDTO){
+  public async create(createServiceDay: CreateServiceDayDTO) {
     const create = await this.prismaService.serviceDay.create({
       data: {
         user_id: createServiceDay.user_id,
-        report_reading: createServiceDay.report_reading
-      }
+        report_reading: createServiceDay.report_reading,
+      },
     });
 
-    createServiceDay.itens_id.map(async(i) => {
-      await this.prismaService.$queryRaw`INSERT INTO 'service-day-itens' (post_id, itens_id, user_id) VALUES (${createServiceDay.post_id}, ${i}, ${createServiceDay.user_id})`;
+    createServiceDay.itens_id.forEach(async (element) => {
+      await this.prismaService.serviceDayItens.create({
+        data: {
+          service_day_id: create.id,
+          itens_id: element,
+          post_id: createServiceDay.post_id,
+          user_id: createServiceDay.user_id,
+        },
+      });
     });
 
     return create;
   }
 
-  public async findLatestItensPostServiceDay(post_id: string): Promise<ServiceDayItens[]>{
+  public async findLatestItensPostServiceDay(
+    post_id: string,
+  ): Promise<ServiceDayItens[]> {
     const latest = await this.prismaService.serviceDayItens.findMany({
       where: {
-        post_id
+        post_id,
       },
-      include: {
-        itens: true
-      }
     });
 
     return latest;

@@ -5,6 +5,6 @@ import { PrismaService } from 'src/prisma.service';
 
 @Module({
   providers: [PanicService, PrismaService],
-  controllers: [PanicController]
+  controllers: [PanicController],
 })
 export class PanicModule {}
