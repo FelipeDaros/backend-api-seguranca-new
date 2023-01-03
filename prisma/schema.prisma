@@ -12,20 +12,19 @@ datasource db {
 }
 
 model Users {
-  id              String            @id @default(uuid())
-  email           String            @unique
-  name            String
-  password        String
-  isAdmin         Int               @default(0)
-  Alert           Alert[]
-  ServiceDay      ServiceDay[]
-  ServiceDayItens ServiceDayItens[]
-  Occurrence      Occurrence[]
-  Round           Round[]
-  post            Post?             @relation(fields: [post_id], references: [id])
-  post_id         String?           @default("")
-  TimeAlert       TimeAlert[]
-  Panic           Panic[]
+  id         String       @id @default(uuid())
+  email      String       @unique
+  name       String
+  password   String
+  isAdmin    Int          @default(0)
+  Alert      Alert[]
+  Occurrence Occurrence[]
+  Round      Round[]
+  post       Post?        @relation(fields: [post_id], references: [id])
+  post_id    String?      @default("")
+  TimeAlert  TimeAlert[]
+  Panic      Panic[]
+  ServiceDay ServiceDay[]
 
   @@map("users")
 }
@@ -63,11 +62,10 @@ model Points {
 }
 
 model Itens {
-  id              String            @id @default(uuid())
-  name            String
-  created_at      DateTime          @default(now())
-  PostItens       PostItens[]
-  ServiceDayItens ServiceDayItens[]
+  id         String      @id @default(uuid())
+  name       String
+  created_at DateTime    @default(now())
+  PostItens  PostItens[]
 
   @@map("itens")
 }
@@ -76,12 +74,11 @@ model Post {
   id   String @id @default(uuid())
   name String @unique
 
-  company         Company?          @relation(fields: [company_id], references: [id])
-  company_id      String
-  PostItens       PostItens[]
-  ServiceDayItens ServiceDayItens[]
-  Round           Round[]
-  Users           Users[]
+  company    Company?    @relation(fields: [company_id], references: [id])
+  company_id String
+  PostItens  PostItens[]
+  Round      Round[]
+  Users      Users[]
 
   @@map("post")
 }
@@ -98,27 +95,25 @@ model PostItens {
 }
 
 model ServiceDay {
-  id             String   @id @default(uuid())
-  created_at     DateTime @default(now())
-  report_reading Boolean  @default(false)
-  user           Users    @relation(fields: [user_id], references: [id])
-  user_id        String
+  id              String            @id @default(uuid())
+  created_at      DateTime          @default(now())
+  report_reading  Boolean           @default(false)
+  Users           Users?            @relation(fields: [user_id], references: [id])
+  user_id         String?
+  ServiceDayItens ServiceDayItens[]
 
   @@map("serviceday")
 }
 
 model ServiceDayItens {
-  post    Post   @relation(fields: [post_id], references: [id])
-  post_id String
+  id             String      @id @default(uuid())
+  user_id        String?
+  post_id        String?
+  itens_id       String?
+  ServiceDay     ServiceDay? @relation(fields: [service_day_id], references: [id])
+  service_day_id String?
 
-  itens    Itens  @relation(fields: [itens_id], references: [id])
-  itens_id String
-
-  user    Users  @relation(fields: [user_id], references: [id])
-  user_id String
-
-  @@id([post_id, itens_id, user_id])
-  @@map("service-day-itens")
+  @@map("service_day_itens")
 }
 
 model Occurrence {

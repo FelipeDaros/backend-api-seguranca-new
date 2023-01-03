@@ -117,6 +117,25 @@ CREATE TABLE "time-alert" (
     CONSTRAINT "time-alert_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "panic" (
+    "id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "verify" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "panic_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "permissions" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "permissions_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
@@ -128,6 +147,12 @@ CREATE UNIQUE INDEX "points_name_key" ON "points"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "post_name_key" ON "post"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "permissions_id_key" ON "permissions"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "permissions_name_key" ON "permissions"("name");
 
 -- AddForeignKey
 ALTER TABLE "users" ADD CONSTRAINT "users_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -151,15 +176,6 @@ ALTER TABLE "post_itens" ADD CONSTRAINT "post_itens_itens_id_fkey" FOREIGN KEY (
 ALTER TABLE "serviceday" ADD CONSTRAINT "serviceday_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "service-day-itens" ADD CONSTRAINT "service-day-itens_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "service-day-itens" ADD CONSTRAINT "service-day-itens_itens_id_fkey" FOREIGN KEY ("itens_id") REFERENCES "itens"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "service-day-itens" ADD CONSTRAINT "service-day-itens_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "occurrence" ADD CONSTRAINT "occurrence_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -173,3 +189,6 @@ ALTER TABLE "round" ADD CONSTRAINT "round_post_id_fkey" FOREIGN KEY ("post_id") 
 
 -- AddForeignKey
 ALTER TABLE "time-alert" ADD CONSTRAINT "time-alert_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "panic" ADD CONSTRAINT "panic_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

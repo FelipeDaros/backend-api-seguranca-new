@@ -1,20 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { ServiceDayItens } from '@prisma/client';
-import dayjs from 'dayjs';
 import { PrismaService } from 'src/prisma.service';
 import { CreateServiceDayDTO } from './DTO/CreateServiceDay.dto';
-import { ValidatorHourAlertValidator } from './validators/ValidatorHourAlert.validator';
 
 @Injectable()
 export class ServiceDayService {
-  constructor(
-    private prismaService: PrismaService,
-    private readonly validatorHourAlertValidator: ValidatorHourAlertValidator,
-  ) {}
+  constructor(private prismaService: PrismaService) {}
 
   public async create(createServiceDay: CreateServiceDayDTO) {
-    console.log();
-
     const create = await this.prismaService.serviceDay.create({
       data: {
         user_id: createServiceDay.user_id,
@@ -25,15 +18,11 @@ export class ServiceDayService {
     createServiceDay.itens_id.forEach(async (element) => {
       await this.prismaService.serviceDayItens.create({
         data: {
+          service_day_id: create.id,
           itens_id: element,
           post_id: createServiceDay.post_id,
           user_id: createServiceDay.user_id,
         },
-      });
-      console.log({
-        itens_id: element,
-        post_id: createServiceDay.post_id,
-        user_id: createServiceDay.user_id,
       });
     });
 
@@ -46,9 +35,6 @@ export class ServiceDayService {
     const latest = await this.prismaService.serviceDayItens.findMany({
       where: {
         post_id,
-      },
-      include: {
-        itens: true,
       },
     });
 
